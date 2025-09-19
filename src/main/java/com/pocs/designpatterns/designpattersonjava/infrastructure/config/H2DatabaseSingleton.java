@@ -1,4 +1,4 @@
-package com.pocs.designpatterns.designpattersonjava.infrastructure;
+package com.pocs.designpatterns.designpattersonjava.infrastructure.config;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

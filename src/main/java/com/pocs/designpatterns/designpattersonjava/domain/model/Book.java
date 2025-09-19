@@ -1,4 +1,4 @@
-package com.pocs.designpatterns.designpattersonjava.domain;
+package com.pocs.designpatterns.designpattersonjava.domain.model;
 
 /**
  * Book domain model.
@@ -11,4 +11,3 @@ public record Book(
     String format,
     String state
 ) {}
-

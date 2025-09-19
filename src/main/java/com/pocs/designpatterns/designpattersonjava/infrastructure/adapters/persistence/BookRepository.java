@@ -1,6 +1,7 @@
-package com.pocs.designpatterns.designpattersonjava.infrastructure;
+package com.pocs.designpatterns.designpattersonjava.infrastructure.adapters.persistence;
 
-import com.pocs.designpatterns.designpattersonjava.domain.Book;
+import com.pocs.designpatterns.designpattersonjava.domain.model.Book;
+import com.pocs.designpatterns.designpattersonjava.infrastructure.config.H2DatabaseSingleton;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
