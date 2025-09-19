@@ -1,6 +1,7 @@
 package com.pocs.designpatterns.designpattersonjava.infrastructure.adapters.web;
 
 import com.pocs.designpatterns.designpattersonjava.application.ports.in.BookManagementUseCase;
+import com.pocs.designpatterns.designpattersonjava.application.services.BookSearchService;
 import com.pocs.designpatterns.designpattersonjava.domain.model.Book;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +11,18 @@ import java.util.Map;
 /**
  * REST controller adapter for book management operations.
  * Delegates to the application layer through the input port.
+ * Now includes Strategy Pattern search functionality.
  */
 @RestController
 @RequestMapping("/books")
 public class BookController {
 
     private final BookManagementUseCase bookManagementUseCase;
+    private final BookSearchService bookSearchService;
 
-    public BookController(BookManagementUseCase bookManagementUseCase) {
+    public BookController(BookManagementUseCase bookManagementUseCase, BookSearchService bookSearchService) {
         this.bookManagementUseCase = bookManagementUseCase;
+        this.bookSearchService = bookSearchService;
     }
 
     @GetMapping
@@ -113,5 +117,86 @@ public class BookController {
                 )
             )
         );
+    }
+
+    /**
+     * Strategy Pattern - Search books by type (Fiction/No Fiction).
+     */
+    @GetMapping("/search/type/{type}")
+    public List<Book> searchBooksByType(@PathVariable String type) {
+        return bookSearchService.searchBooksByType(type);
+    }
+
+    /**
+     * Strategy Pattern - Search books by format (Physical/Digital).
+     */
+    @GetMapping("/search/format/{format}")
+    public List<Book> searchBooksByFormat(@PathVariable String format) {
+        return bookSearchService.searchBooksByFormat(format);
+    }
+
+    /**
+     * Strategy Pattern - Search books by availability state.
+     */
+    @GetMapping("/search/state/{state}")
+    public List<Book> searchBooksByState(@PathVariable String state) {
+        return bookSearchService.searchBooksByState(state);
+    }
+
+    /**
+     * Strategy Pattern - Search books by title (partial matching).
+     */
+    @GetMapping("/search/title")
+    public List<Book> searchBooksByTitle(@RequestParam String title) {
+        return bookSearchService.searchBooksByTitle(title);
+    }
+
+    /**
+     * Strategy Pattern - Search books by author (partial matching).
+     */
+    @GetMapping("/search/author")
+    public List<Book> searchBooksByAuthor(@RequestParam String author) {
+        return bookSearchService.searchBooksByAuthor(author);
+    }
+
+    /**
+     * Strategy Pattern - Search books by both type and format.
+     */
+    @GetMapping("/search/combined")
+    public List<Book> searchBooksByTypeAndFormat(@RequestParam String type, @RequestParam String format) {
+        return bookSearchService.searchBooksByTypeAndFormat(type, format);
+    }
+
+    /**
+     * Strategy Pattern - Generic search with runtime strategy selection.
+     */
+    @GetMapping("/search/strategy/{strategyType}")
+    public Map<String, Object> searchWithStrategy(@PathVariable String strategyType,
+                                                 @RequestParam String criteria) {
+        return bookSearchService.searchWithStrategy(strategyType, criteria);
+    }
+
+    /**
+     * Gets information about all available search strategies.
+     */
+    @GetMapping("/search/strategies")
+    public Map<String, Object> getAvailableStrategies() {
+        return bookSearchService.getAvailableStrategies();
+    }
+
+    /**
+     * Gets detailed information about a specific search strategy.
+     */
+    @GetMapping("/search/strategies/{strategyType}")
+    public Map<String, Object> getStrategyInfo(@PathVariable String strategyType) {
+        return bookSearchService.getStrategyInfo(strategyType);
+    }
+
+    /**
+     * Demonstrates all search strategies with current data.
+     */
+    @GetMapping("/search/demo")
+    public Map<String, Object> demonstrateSearchStrategies() {
+        return bookSearchService.demonstrateAllStrategies();
     }
 }
