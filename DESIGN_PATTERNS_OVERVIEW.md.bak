@@ -2,7 +2,7 @@
 
 ## Project Summary
 
-This Java 21 Spring Boot application demonstrates **8 major design patterns** working together in a hexagonal architecture to create a comprehensive library book management system.
+This Java 21 Spring Boot application demonstrates **7 major design patterns** working together in a hexagonal architecture to create a comprehensive library book management system.
 
 ## Implemented Design Patterns
 
