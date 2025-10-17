@@ -49,7 +49,7 @@ public class AuthorValidator extends BookValidator {
         }
 
         // Check that author doesn't consist only of special characters
-        if (author.trim().matches("^[.'-\\s]+$")) {
+        if (author.trim().matches("^[.'\\-\\s]+$")) {
             throw new ValidationException(
                 "Author name must contain at least one letter",
                 getValidatorName()
@@ -62,4 +62,3 @@ public class AuthorValidator extends BookValidator {
         return "AuthorValidator";
     }
 }
-
