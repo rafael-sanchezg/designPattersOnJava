@@ -39,4 +39,12 @@ public interface BookRepositoryPort {
      * @param id the book identifier
      */
     void deleteById(int id);
+
+    /**
+     * Updates an existing book in the repository.
+     *
+     * @param book the book to update
+     * @return the updated book
+     */
+    Book update(Book book);
 }

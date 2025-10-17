@@ -109,4 +109,29 @@ public class BookRepositoryAdapter implements BookRepositoryPort {
             throw new RuntimeException("Failed to delete book", e);
         }
     }
+
+    @Override
+    public Book update(Book book) {
+        String sql = "UPDATE book SET title = ?, author = ?, type = ?, format = ?, state = ? WHERE id = ?";
+        try (Connection conn = H2DatabaseSingleton.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, book.title());
+            stmt.setString(2, book.author());
+            stmt.setString(3, book.type());
+            stmt.setString(4, book.format());
+            stmt.setString(5, book.state());
+            stmt.setInt(6, book.id());
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows == 0) {
+                throw new SQLException("Updating book failed, no rows affected.");
+            }
+
+            return book;
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to update book", e);
+        }
+    }
 }
+
